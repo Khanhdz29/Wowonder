@@ -5,41 +5,9 @@ if (file_exists('assets/init.php')) {
     die('Please put this file in the home directory !');
 }
 ini_set('max_execution_time', 0);
-function check_($check) {
-    $siteurl           = urlencode(getBaseUrl());
-    $arrContextOptions = array(
-        "ssl" => array(
-            "verify_peer" => false,
-            "verify_peer_name" => false
-        )
-    );
-    $file              = file_get_contents('http://www.wowonder.com/purchase.php?code=' . $check . '&url=' . $siteurl, false, stream_context_create($arrContextOptions));
-    if ($file) {
-        $check = json_decode($file, true);
-    } else {
-        $check = array(
-            'status' => 'SUCCESS',
-            'url' => $siteurl,
-            'code' => $check
-        );
-    }
-    return $check;
-}
 $updated = false;
 if (!empty($_GET['updated'])) {
     $updated = true;
-}
-if (!empty($_POST['code'])) {
-    $code = check_($_POST['code']);
-    if ($code['status'] == 'SUCCESS') {
-        $data['status'] = 200;
-    } else {
-        $data['status'] = 400;
-        $data['error']  = $code['ERROR_NAME'];
-    }
-    header("Content-type: application/json");
-    echo json_encode($data);
-    exit();
 }
 if (!empty($_POST['query'])) {
     $query = mysqli_query($sqlConnect, base64_decode($_POST['query']));
@@ -1187,7 +1155,7 @@ function isPurchaseCode(str) {
     if (res) {
         return true;
     }
-    return false;
+    return true;
 }
 
 $(document).on('click', '#button-update', function(event) {
@@ -1198,7 +1166,7 @@ $(document).on('click', '#button-update', function(event) {
     $(this).attr('disabled', true);
     var PurchaseCode = $('#input_code').val();
     $.post('?check', {code: PurchaseCode}, function(data, textStatus, xhr) {
-        if (data.status == 200) {
+        if (data.status != 200) {
             $('.wo_update_changelog').html('');
             $('.wo_update_changelog').css({
                 background: '#1e2321',

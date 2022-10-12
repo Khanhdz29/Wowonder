@@ -81,6 +81,8 @@ $sql_db_name = "'  . $_POST['sql_name'] . '";
 // Site URL
 $site_url = "' . $_POST['site_url'] . '"; // e.g (http://example.com)
 
+$auto_redirect = true;
+
 // Purchase code
 $purchase_code = "' . trim($_POST['purshase_code']) . '"; // Your purchase code, don\'t give it to anyone.
 ?>';
@@ -146,8 +148,6 @@ if (file_exists('../htaccess.txt')) {
            }
             // chmod general config file
             @chmod("./assets/init.php", 0777);
-            // chmod libraries
-            @chmod("./libraries/PayPal", 0777);
             //chmod upload folder
             @chmod("./upload", 0777);
 
@@ -200,6 +200,7 @@ if (file_exists('../htaccess.txt')) {
             $disabled = false;
             $mysqli = true;
             $is_writable = true;
+            $is_lang_writable = true;
             $is_node_json_writable = true;
             $mbstring = true;
             $is_htaccess = true;
@@ -225,7 +226,7 @@ if (file_exists('../htaccess.txt')) {
             $gd = false;
             $disabled = true;
             }
-            if (!version_compare(PHP_VERSION, '5.5.0', '>=')) {
+            if (!version_compare(PHP_VERSION, '7.1.0', '>=')) {
             $php = false;
             $disabled = true;
             }
@@ -235,6 +236,10 @@ if (file_exists('../htaccess.txt')) {
             }
             if (!is_writable('../nodejs/config.json')) {
             $is_node_json_writable = false;
+            $disabled = true;
+            }
+            if (!is_writable('../nodejs/models/wo_langs.js')) {
+            $is_lang_writable = false;
             $disabled = true;
             }
             if (!file_exists('../.htaccess')) {
@@ -318,8 +323,8 @@ if (file_exists('../htaccess.txt')) {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>PHP 5.5+</td>
-                        <td>Required PHP version 5.5 or more</td>
+                        <td>PHP 7.1+</td>
+                        <td>Required PHP version 7.1 or more</td>
                         <td><?php echo ($php == true) ? '<font color="green"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M9.707 17.707l10-10-1.414-1.414L9 15.586l-4.293-4.293-1.414 1.414 5 5a.997.997 0 0 0 1.414 0z"/></svg> Installed</font>' : '<font color="red"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6.707 18.707L12 13.414l5.293 5.293 1.414-1.414L13.414 12l5.293-5.293-1.414-1.414L12 10.586 6.707 5.293 5.293 6.707 10.586 12l-5.293 5.293z"/></svg> Not installed</font>'?></td>
                       </tr>
                       <tr>
@@ -374,8 +379,13 @@ if (file_exists('../htaccess.txt')) {
                       </tr>
                       <tr>
                         <td>config.json</td>
-                        <td>Required config.php to be writable for the installation <small>(Located in nodejs/config.json)</small></td>
-                        <td><?php echo ($is_writable == true) ? '<font color="green"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M9.707 17.707l10-10-1.414-1.414L9 15.586l-4.293-4.293-1.414 1.414 5 5a.997.997 0 0 0 1.414 0z"/></svg> Writable</font>' : '<font color="red"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6.707 18.707L12 13.414l5.293 5.293 1.414-1.414L13.414 12l5.293-5.293-1.414-1.414L12 10.586 6.707 5.293 5.293 6.707 10.586 12l-5.293 5.293z"/></svg> Not writable</font>'?></td>
+                        <td>Required config.json to be writable for the installation <small>(Located in nodejs/config.json)</small></td>
+                        <td><?php echo ($is_node_json_writable == true) ? '<font color="green"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M9.707 17.707l10-10-1.414-1.414L9 15.586l-4.293-4.293-1.414 1.414 5 5a.997.997 0 0 0 1.414 0z"/></svg> Writable</font>' : '<font color="red"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6.707 18.707L12 13.414l5.293 5.293 1.414-1.414L13.414 12l5.293-5.293-1.414-1.414L12 10.586 6.707 5.293 5.293 6.707 10.586 12l-5.293 5.293z"/></svg> Not writable</font>'?></td>
+                      </tr>
+                      <tr>
+                        <td>wo_langs.js</td>
+                        <td>Required wo_langs.js to be writable for the installation <small>(Located in nodejs/models/wo_langs.js)</small></td>
+                        <td><?php echo ($is_lang_writable == true) ? '<font color="green"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M9.707 17.707l10-10-1.414-1.414L9 15.586l-4.293-4.293-1.414 1.414 5 5a.997.997 0 0 0 1.414 0z"/></svg> Writable</font>' : '<font color="red"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6.707 18.707L12 13.414l5.293 5.293 1.414-1.414L13.414 12l5.293-5.293-1.414-1.414L12 10.586 6.707 5.293 5.293 6.707 10.586 12l-5.293 5.293z"/></svg> Not writable</font>'?></td>
                       </tr>
                     </tbody>
                   </table>
@@ -418,8 +428,8 @@ if (file_exists('../htaccess.txt')) {
                                         <div class="form-group">
                                             <div class="col-md-2"></div>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" name="purshase_code" value="<?php echo (!empty($_POST['purshase_code'])) ? trim($_POST['purshase_code']) : '';?>" placeholder="Purchase code" autofocus>
-                                                <span class="help-block">Purshase Code: 99ee10c4-81a5-479e-95b1-23e7c35c9b95 share by <a target="_blank" href="https://weadown.com">weadown.com</a>.</span>
+                                                <input type="text" class="form-control" name="purshase_code" value="DoniaWeB" placeholder="Purchase code" autofocus>
+                                                <span class="help-block">Nulled By <a href="https://doniaweb.com" target="_blank">DoniaWeB</a>.</span>
                                             </div>
                       <div class="col-md-2"></div>
                                         </div>

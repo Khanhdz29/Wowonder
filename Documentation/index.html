@@ -61,7 +61,7 @@
 						<a class="logo ml-md-3" href="index.html" title="iDocs Template">
 						<img src="assets/images/logo-light.png" alt="iDocs Template" />
 						</a>
-						<span class="text-2 text-light ml-2">v4.1.1</span>
+						<span class="text-2 text-light ml-2">v4.1.4</span>
 						<!-- Logo End -->
 						<!-- Navbar Toggler -->
 						<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#header-nav">
@@ -97,9 +97,12 @@
 								<li class="nav-item">
 									<a class="nav-link" href="#idocs_installation">Installation</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#idocs_whats_next">What's Next?</a>
-								</li>
+								 <li class="nav-item">
+                           <a class="nav-link" href="#idocs_whats_next">What's Next?</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="#idocs_ssl">Setup SSL</a>
+                        </li>
 								<li class="nav-item">
 									<a class="nav-link" href="#idocs_color_schemes">Color Schemes</a>
 								</li>
@@ -115,7 +118,7 @@
 									<a class="nav-link" href="#idocs_smtp">SMTP (E-mail)</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#idocs_ffmpeg">FFMPEG </a>
+									<a class="nav-link" href="#idocs_ffmpeg">FFMPEG (Converter) </a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#idocs_nodejs">NodeJS </a>
@@ -132,6 +135,10 @@
 								<li class="nav-item">
 									<a class="nav-link" href="#google_map_api">Google Map API</a>
 								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#google_translate_api">Google Translate API</a>
+								</li>
+								
 								<li class="nav-item">
 									<a class="nav-link" href="#yandex_translation_api">Yandex Translation API</a>
 								</li>
@@ -238,6 +245,9 @@
 									<a class="nav-link" href="#idocs_digitalocean">Digitalocean</a>
 								</li>
 								<li class="nav-item">
+                           <a class="nav-link" href="#idocs_BackBlaze">BackBlaze Storage</a>
+                        </li>
+								<li class="nav-item">
 									<a class="nav-link" href="#idocs_googlecloud">Google Cloud</a>
 								</li>
 								<li class="nav-item">
@@ -339,6 +349,15 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#idocs_changelog">Changelog</a>
 							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="#v4-1-4">v4.1.4</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#v4-1-3">v4.1.3</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#v4-1-2">v4.1.2</a>
+								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#v4-1-1">v4.1.1</a>
 								</li>
@@ -570,7 +589,7 @@
 							<a class="nav-link" href="#idocs_templates" target="_blank">More PHP Scripts</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#" target="_blank">API Docs (Coming Soon)</a>
+							<a class="nav-link" href="https://demo.wowonder.com/api/v2/Documentation.html" target="_blank">API Docs</a>
 						</li>
 					</ul>
 				</div>
@@ -589,7 +608,7 @@
 								<div class="col-sm-6 col-lg-4">
 									<ul class="list-unstyled">
 										<li>
-											<strong>Current Version:</strong> 4.1.1
+											<strong>Current Version:</strong> 4.1.4
 										</li>
 										<li>
 											<strong>Author:</strong>
@@ -603,7 +622,7 @@
 											<strong class="font-weight-700">Created On:</strong> 26 Nov, 2015
 										</li>
 										<li>
-											<strong>Last Update:</strong> 07 Jul, 2022
+											<strong>Last Update:</strong> 23 Sep, 2022
 										</li>
 									</ul>
 								</div>
@@ -681,29 +700,43 @@
 							</ul>
 						</section>
 						<hr class="divider">
-						<section id="idocs_whats_next">
-							<h2>What's Next?</h2>
-							<p>Most Important Part After Installation is to redirect non www to www, or www to non www. Also it is important to setup SSL for your site, Please follow the steps below to do so.</p>
-							<ul>
-								<li>Open .htaccess file located in root directory.</li>
-								<li>
-									To redirect your website to SSL, copy and paste the code below after <strong>RewriteEngine On</strong>
-									<pre>
-																										<code class="html hljs xml">RewriteCond %{HTTPS} off
+                  <section id="idocs_whats_next">
+                     <h2>What's Next?</h2>
+                     <div class="alert alert-warning"><strong>Important!</strong> after the installation is completed, you have to set the cronjob, please use the command below and add it to your server's cronjob.</div>
+                     <ul>
+                        <li>Open linux terminal or login thru SSH.</li>
+                        <li>Run: <code>crontab -e</code></li>
+                        <li>Add this code to the list: <code>*/5 * * * * php -f {PATH_TO_SCRIPT_FROM_ROOT}/cron-job.php > /dev/null 2>&1</code>.</li>
+                        <li>Replace {PATH_TO_SCRIPT_FROM_ROOT} with the full path to the file, e.g: <code>/home/playtube/public_html/cronjob.php</code></li>
+                        <li>Save and exit.</li>
+                        <li>If you are using cPanel, please follow <a href="https://www.cluemediator.com/set-the-cron-job-to-run-a-php-script-in-cpanel">these steps</a> and replace the file name with cron-job.php, and make sure the cronjob run once every 5 minutes.</li>
+                     </ul>
+                     </ul>
+                  </section>
+                  <hr class="divider">
+                  <section id="idocs_ssl">
+                     <h2>How to Setup SSL?</h2>
+                     <div class="alert alert-warning"><strong>Important!</strong> after the installation is completed, you have to set the redirections, please follow the steps below to setup SSL.</div>
+                     <ul>
+                        <li>Open .htaccess file located in root directory.</li>
+                        <li>
+                           To redirect your website to SSL, copy and paste the code below after <strong>RewriteEngine On</strong>
+                           <pre>
+                                                                              <code class="html hljs xml">RewriteCond %{HTTPS} off
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]</code>
-																										</pre>
-								</li>
-								<li>
-									To redirect your website to www, copy and paste the code below after <strong>RewriteEngine On</strong>
-									<pre>
-																													<code class="html hljs xml">RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
+                                                                              </pre>
+                        </li>
+                        <li>
+                           To redirect your website to www, copy and paste the code below after <strong>RewriteEngine On</strong>
+                           <pre>
+                                                                                       <code class="html hljs xml">RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
 RewriteCond %{HTTPS}s ^on(s)|
 RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
-																												</pre>
-								</li>
-								<li>If you made any changes above, last step is to update your domain name in <code>config.php</code> file. </li>
-							</ul>
-						</section>
+                                                                                    </pre>
+                        </li>
+                        <li>If you made any changes above, last step is to update your domain name in <code>config.php</code> file. </li>
+                     </ul>
+                  </section>
 						<hr class="divider">
 						<!-- Color Schemes
 							============================ -->
@@ -900,13 +933,35 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 								<li>Select the project from the dropdown menu beside <strong>Google Cloud Platform</strong>.</li>
 								<li>Click on <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">APIs & Services</a> then click on <strong>+ENABLE APIS AND SERVICES</strong> .</li>
 								<li>Search for <strong>Maps Embed API</strong> and enable it.</li>
-								<li>Search for <strong>Maps Static API</strong> and enable it.</li>
+      							<li>Search for <strong>Maps Static API</strong> and enable it.</li>
+                                <li>Search for <strong>Maps JavaScript API</strong> and enable it.</li>
 								<li>Once enabled, click on <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Credentials</a>, on the top nav-bar, click on <strong>+Create credentials</strong> then click on <strong>API key</strong></li>
 								<li>Grab the key and Click <strong>Close</strong>.</li>
 								<li>
 									Go to <code>Admin Panel -> Settings -> Website Information -> Features API Keys & Information</code>, and edit the following options:
 									<ol>
 										<li><strong>Google Map API</strong> - Enter the API key you created in the previous chapter. </li>
+									</ol>
+								</li>
+							</ul>
+						</section>
+						<hr class="divider">
+						<section id="google_translate_api">
+							<h4>How to get Google Translate Key?</h4>
+							<div class="alert alert-info">Google Translate API is required for to translate posts.</div>
+							<ul>
+								<li>Go to the <a href="https://console.developers.google.com/" target="_blank">Google API Manager</a> console and log in using your Google credentials.</li>
+								<li>After this click on <a href="https://console.cloud.google.com/projectcreate" target="_blank">Create Project</a> link for create new project.</li>
+								<li>Enter <strong>Project Name</strong> and click on <strong>Create</strong> button.</li>
+								<li>Select the project from the dropdown menu beside <strong>Google Cloud Platform</strong>.</li>
+								<li>Click on <a href="https://console.cloud.google.com/apis/dashboard" target="_blank">APIs & Services</a> then click on <strong>+ENABLE APIS AND SERVICES</strong> .</li>
+								<li>Search for <strong>Cloud Translation API</strong> and enable it.</li>
+								<li>Once enabled, click on <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Credentials</a>, on the top nav-bar, click on <strong>+Create credentials</strong> then click on <strong>API key</strong></li>
+								<li>Grab the key and Click <strong>Close</strong>.</li>
+								<li>
+									Go to <code>Admin Panel -> Settings -> Website Information -> Features API Keys & Information</code>, and edit the following options:
+									<ol>
+										<li><strong>Google Translate API</strong> - Enter the API key you created in the previous chapter. </li>
 									</ol>
 								</li>
 							</ul>
@@ -1659,6 +1714,9 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 						<section id="idocs_amazon_s3">
 							<h4>How to setup Amazon S3 Storage?</h4>
 							<div class="alert alert-info">The script will upload images, videos, and all media files to Amazon, your server's CPU load will decrease and your website performance will increase.</div>
+							<hr>
+                     <iframe width="100%" height="600" src="https://www.youtube.com/embed/iPZPw2IiKg4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                     <hr>
 							<ul>
 								<li>Sign in to the AWS Management Console and open the Amazon S3 console at <a href="https://console.aws.amazon.com/s3/" target="_blank">https://console.aws.amazon.com/s3/</a>.</li>
 								<li>Choose <strong>Create bucket</strong>.</li>
@@ -1742,6 +1800,9 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 						<section id="idocs_digitalocean">
 							<h4>How to setup Digitalocean Storage?</h4>
 							<div class="alert alert-info">The script will upload images, videos, and all media files to Digitalocean, your server's CPU load will decrease and your website performance will increase.</div>
+							<hr>
+                     <iframe width="100%" height="600" src="https://www.youtube.com/embed/pm8_sifAc4E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                     <hr>
 							<ul>
 								<li>Sign in to the DigitalOcean Console at <a href="https://cloud.digitalocean.com/" target="_blank">https://cloud.digitalocean.com/</a>.</li>
 								<li>You can create a Space from the <strong>Create menu</strong> by selecting Spaces. This will take you to the <strong>Create a Space</strong> page.</li>
@@ -1779,6 +1840,16 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 							</ul>
 						</section>
 						<hr class="divider">
+						 <section id="idocs_BackBlaze">
+                     <h4>How to setup BackBlaze Storage?</h4>
+                     
+                     <div class="alert alert-info">The script will upload images and audio files to BackBlaze, your server's CPU load will decrease and your website performance will increase.</div>
+                     <hr>
+                     <iframe width="100%" height="600" src="https://www.youtube.com/embed/qZERiu0YhoE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                     <hr>
+                     
+                  </section>
+                  <hr class="divider">
 						<section id="idocs_googlecloud">
 							<h4>How to setup Google Cloud?</h4>
 							<div class="alert alert-info">You can store images, videos, and all media files in Google Cloud.</div>
@@ -1870,6 +1941,10 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 						<section id="WasabiS3">
 							<h4>How to setup Wasabi (S3) Storage?</h4>
 							<div class="alert alert-info">You can store images, videos, and all media files in Wasabi using S3 method.</div>
+
+							  <hr>
+                     <iframe width="100%" height="600" src="https://www.youtube.com/embed/tqcH02odFho" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                     <hr>
 							<ul>
 								<li>Sign in to the Wasabi Console at <a href="https://wasabi.com/" target="_blank">https://wasabi.com/</a>.</li>
 								<li>Click On Create A bucket, and fill the required information, then create the bucket.</li>
@@ -1913,6 +1988,9 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 						<section id="idocs_twilio_video">
 							<h4>How to setup Twilio Video service?</h4>
 							<div class="alert alert-info">Twilio is used as third party provider for video chat.</div>
+							 <hr>
+                     <iframe width="100%" height="600" src="https://www.youtube.com/embed/i0O1BsJh_rw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                     <hr>
 							<ul>
 								<li>Log into your Twilio project at <a href="https://twilio.com/console" target="_blank">www.twilio.com/console</a>. If you don't have account yet, create one.</li>
 								<li>Click on <a href="https://console.twilio.com/us1/account/keys-credentials/api-keys" target="_blank">https://console.twilio.com/us1/account/keys-credentials/api-keys</a>.
@@ -1934,6 +2012,9 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 						<section id="agora_video">
 							<h4>How to setup Agora (Video Chat) service?</h4>
 							<div class="alert alert-info">Agora is used as third party provider for video chat.</div>
+							<hr>
+                     <iframe width="100%" height="600" src="https://www.youtube.com/embed/ScAhruQWKyY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                     <hr>
 							<ul>
 								<li>Sign up <a href="https://sso.agora.io/en/signup/" target="_blank">here</a> to create an Agora account. After sign-up, you can log in <a href="https://console.agora.io/">here</a>.</li>
 								<li>
@@ -1983,6 +2064,9 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 						<section id="agora_live">
 							<h4>How to setup Agora (Live Streaming) service?</h4>
 							<div class="alert alert-info">Agora is used as third party provider live streaming.</div>
+							<hr>
+                     <iframe width="100%" height="600" src="https://www.youtube.com/embed/ScAhruQWKyY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                     <hr>
 							<ul>
 								<li>Sign up <a href="https://sso.agora.io/en/signup/" target="_blank">here</a> to create an Agora account. After sign-up, you can log in <a href="https://console.agora.io/">here</a>.</li>
 								<li>
@@ -2365,32 +2449,18 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 									<img src="assets/images/updates/step1.png" class="img-fluid img-thumbnail" alt="image">
 									</a>
 								</li>
-								<li>
-									<p>Choose the update version, and extract it to your Desktop.</p>
-									<div class="alert alert-warning">
-										<strong>Note:</strong> If you have missed an update or multiple updates, you have to update your site version by version manually. Please don't skip a version.
-									</div>
-								</li>
-								<li>
-									<p>The extracted files structure should look like this:</p>
-									<a class="popup-img" href="assets/images/updates/step2.png">
-									<img src="assets/images/updates/step2.png" class="img-fluid img-thumbnail" alt="image">
-									</a>
-								</li>
-								<li>Upload <code>./update.php</code> to your server using FTP client: /path/to/wowonder/update.php (Script root directory)</li>
-								<li>
-									<p>Open the <code>./Script/</code> folder, upload and overwrite ALL files/folders (SELECT ALL) file(s) located inside <code>./Script/</code> folder to your server, if you have renamed your theme, please open <code>./Script/themes/wowonder/</code> and upload & overwrite ALL files/folders to your theme folder as shown below:</p>
-									<a class="popup-img" href="assets/images/updates/step3.png">
-									<img src="assets/images/updates/step3.png" class="img-fluid img-thumbnail" alt="image">
-									</a></p>
-								</li>
-								<li>Once the files are uploaded, open and run http://www.YOURSITE.COM/update.php (replace YOURSITE.com with your domain).</li>
-								<li>
-									<p>The update process may take up to 1 hour, once the update is done please go to Admin Panel and scroll down to verify the website has been updated as shown below: </p>
-									<a class="popup-img" href="assets/images/updates/step4.png">
-									<img src="assets/images/updates/step4.png" class="img-fluid img-thumbnail" alt="image">
-									</a>
-								</li>
+								
+								
+								<li><p>Choose the update version, and extract it to your Desktop.</p> <div class="alert alert-danger">
+                           <strong>Note:</strong> If you have missed an update or multiple updates, you have to update your site version by version manually. <br>Please don't skip a version. <strong> <br>e.g: (If your website is on v4.0.1 and you want to update to v4.1.2, you have to update to v4.1, v4.1.1 and then v2.2.4)</strong>
+                         </div> </li>
+								 <li><p>Open the folder/version you want to update your website to, <code>v1.*</code></li>
+                        <li>Upload and overwrite ALL files/folders (SELECT ALL) file(s) located inside folder to your server, as shown below: <br><br>  <a class="popup-img" href="assets/images/updates/step3.png"><img src="assets/images/updates/step3.png" class="img-fluid img-thumbnail" alt="image"></a></p></li>
+                         <li><p>If you have renamed your theme, please open <code>v4.*/themes/default/</code> and upload & overwrite ALL files/folders to your theme folder.</p></li>
+								<li><strong><span style="color: red">Important Last Step:</span> Once the files are uploaded and updated</strong>, open and run https://YOURSITE.COM/update.php</li>
+                         <li><p>The update process may take up to 1 hour, once the update is done please go to Admin Panel and scroll down to verify the website has been updated as shown below: </p> <a class="popup-img" href="assets/images/updates/step4.png">
+                         <img src="assets/images/updates/step4.png" class="img-fluid img-thumbnail" alt="image">
+                         </a></li>
 							</ul>
 							<div class="alert alert-warning">
 								<strong>Important!</strong> Please note that you may lose any custom work you done on the code if you update your script. Contact your developer to update your website without losing any custom features.
@@ -2450,6 +2520,16 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="accordion accordion-alterate arrow-right" id="popularTopics">
+										<div class="card">
+                                 <div class="card-header" id="heading6">
+                                    <h5 class="mb-0">
+                                       <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">Why I get ERR_TOO_MANY_REDIRECTS?</a>
+                                    </h5>
+                                 </div>
+                                 <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#popularTopics">
+                                    <div class="card-body"> Open config.php and set $auto_redirect to false. This should fix the problem.</div>
+                                 </div>
+                              </div>
 										<div class="card">
 											<div class="card-header" id="heading7">
 												<h5 class="mb-0">
@@ -2604,6 +2684,104 @@ RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</code>
 							<h2>Changelog</h2>
 							<p class="text-4">See what's new added, changed, fixed, improved or updated in the latest versions. </p>
 							<hr class="divider">
+							<h3 id="v4-1-4">v4.1.4 <small class="text-muted"></small>
+  </h3>
+  <ul class="changelog"><li><span class="badge badge-danger">Fixed</span> multi user delete was not working from admin panel.</li>
+<li><span class="badge badge-danger">Fixed</span> slow load when visiting the website first time.</li>
+<li><span class="badge badge-danger">Fixed</span> br tag showing on user about, pages, groups and products.</li>
+<li><span class="badge badge-danger">Fixed</span> wasabi not working with nodejs.</li>
+<li><span class="badge badge-danger">Fixed</span> jpg images with webp mime type returning null images.</li>
+<li><span class="badge badge-danger">Fixed</span> videos are playing even though you play another video.</li>
+<li><span class="badge badge-danger">Fixed</span> coinbase payment returning to 500 Internet server error when canceling a payment.</li>
+<li><span class="badge badge-danger">Fixed</span> profile completion system not working in Instagram mode.</li>
+<li><span class="badge badge-danger">Fixed</span> movies cannot be added by moderators.</li>
+<li><span class="badge badge-danger">Fixed</span> showing long balance in my earnings page.</li>
+<li><span class="badge badge-danger">Fixed</span> post limit per hour not working.</li>
+<li><span class="badge badge-danger">Fixed</span> 4+ more minor bugs.</li></ul>
+
+  <hr class="divider">
+							<h3 id="v4-1-3">v4.1.3 <small class="text-muted">(9 Sep, 2022)</small>
+  </h3>
+  <ul class="changelog"><li><span class="badge badge-danger">Fixed</span> funding page design was broken.</li>
+<li><span class="badge badge-danger">Fixed</span> sending a not supported file in chat won't show the wrong file format pop up.</li>
+<li><span class="badge badge-danger">Fixed</span> when you send a file or an image in chat, clicking on the image doesn't open it.</li>
+<li><span class="badge badge-danger">Fixed</span> "now ago" showing on notifications.</li>
+<li><span class="badge badge-danger">Fixed</span> files are not being deleted from third party storage after deleting the post.</li>
+<li><span class="badge badge-danger">Fixed</span> article link will not open if there an extra slash at the end.</li>
+<li><span class="badge badge-danger">Fixed</span> 4+ more minor bugs.</li></ul><hr class="divider">
+							<h3 id="v4-1-2">v4.1.2 <small class="text-muted">(2 Sep, 2022)</small>
+  </h3>
+  <ul class="changelog"><li><span class="badge badge-success">Added</span> new emojis to messages and posts.</li>
+<li><span class="badge badge-success">Added</span> drag and drop to upload stories page.</li>
+<li><span class="badge badge-success">Added</span> unseen effect to stories.</li>
+<li><span class="badge badge-success">Added</span> new video player.</li>
+<li><span class="badge badge-success">Added</span> video player for movies.</li>
+<li><span class="badge badge-success">Added</span> drag and drop to create an album page.</li>
+<li><span class="badge badge-success">Added</span> audio player on chat when sending a recording file.</li>
+<li><span class="badge badge-success">Added</span> new dropdown menu on header, post and profile.</li>
+<li><span class="badge badge-success">Added</span> new upgrade to pro system. Now users can upgrade to another pro package using the same go pro page instead of using settings page.</li>
+<li><span class="badge badge-success">Added</span> new cron-job.php file, (should be added).</li>
+<li><span class="badge badge-success">Added</span> ISO system for langs.</li>
+<li><span class="badge badge-success">Added</span> Href SEO meta tags.</li>
+<li><span class="badge badge-success">Added</span> BACKBLAZE stroage.</li>
+<li><span class="badge badge-success">Added</span> the ability to upload files from server directly to third party stroages like S3.</li>
+<li><span class="badge badge-success">Added</span> custom endpoint for each storage (CDN support).</li>
+<li><span class="badge badge-success">Added</span> new reaction icons.</li>
+<li><span class="badge badge-success">Added</span> stories unseen border colored animation (profile page).</li>
+<li><span class="badge badge-success">Added</span> 10+ more regions to Wasabi, Ocean and Amazon.</li>
+<li><span class="badge badge-success">Added</span> the ability to choose who can use the affiliate system.</li>
+<li><span class="badge badge-success">Added</span> the ability to edit forum sections and forum names.</li>
+<li><span class="badge badge-success">Added</span> the ability to set custom minimum withdrawal amount.</li>
+<li><span class="badge badge-success">Added</span> "Add Photo" button to post publisher box after choosing an image.</li>
+<li><span class="badge badge-success">Added</span> Google Translate API for posts.</li>
+<li><span class="badge badge-success">Added</span> "Email Deliverability" system to debug and check the log of SMTP settings.</li>
+<li><span class="badge badge-success">Added</span> Hindi, Urdu, Chine, Indonesian, Croatian, Hebrew, Bengali, Japanese, Portuguese, Italian, Persian, Swedish, Vietnamese, Danish, and Filipino languages.</li>
+<li><span class="badge badge-info">Improved</span> design / colors in default theme for few sections.</li>
+<li><span class="badge badge-info">Improved</span> code security.</li>
+<li><span class="badge badge-info">Removed</span> 10+ unused files.</li>
+<li><span class="badge badge-warning">Updated</span> loading icon for notification dropdown.</li>
+<li><span class="badge badge-warning">Updated</span> design of user list in right sidebar in user profile page .</li>
+<li><span class="badge badge-warning">Updated</span> movies watch page design.</li>
+<li><span class="badge badge-warning">Updated</span> funding page design.</li>
+<li><span class="badge badge-warning">Updated</span> date selector for events, profile and other sections.</li>
+<li><span class="badge badge-warning">Updated</span> user settings page.</li>
+<li><span class="badge badge-warning">Updated</span> keyboard shortcuts model design.</li>
+<li><span class="badge badge-warning">Updated</span> header icons.</li>
+<li><span class="badge badge-warning">Updated</span> "Profile Completion" design.</li>
+<li><span class="badge badge-warning">Updated</span> page design.</li>
+<li><span class="badge badge-warning">Updated</span> start-up page.</li>
+<li><span class="badge badge-warning">Updated</span> chat tab design.</li>
+<li><span class="badge badge-warning">Updated</span> wallet page design.</li>
+<li><span class="badge badge-warning">Updated</span> design in few section in sunshine theme.</li>
+<li><span class="badge badge-danger">Fixed</span> reply to messages on sunshine theme (nodejs).</li>
+<li><span class="badge badge-danger">Fixed</span> video / audio call dialog not closing if there are multiple tabs.</li>
+<li><span class="badge badge-danger">Fixed</span> "mark all messages" as read button was hanging.</li>
+<li><span class="badge badge-danger">Fixed</span> stickers not working on nodejs.</li>
+<li><span class="badge badge-danger">Fixed</span> FTP storage was not working on nodejs.</li>
+<li><span class="badge badge-danger">Fixed</span> SEO links on movies, added movie title to movie link instead of using only /ID</li>
+<li><span class="badge badge-danger">Fixed</span> showing dollar sign on points page even if you have a different currency.</li>
+<li><span class="badge badge-danger">Fixed</span> clicking on "Advanced Search" was redirecting to 404 page.</li>
+<li><span class="badge badge-danger">Fixed</span> create blog link could be accessed even if the permission is not allowed.</li>
+<li><span class="badge badge-danger">Fixed</span> points were not added if the blog approval system was enabled.</li>
+<li><span class="badge badge-danger">Fixed</span> blog is not deleted if you delete the blog post.</li>
+<li><span class="badge badge-danger">Fixed</span> Agora live streaming.</li>
+<li><span class="badge badge-danger">Fixed</span> Wallet + Balance were showing on "My Earnings" page.</li>
+<li><span class="badge badge-danger">Fixed</span> group chat notifications (nodejs).</li>
+<li><span class="badge badge-danger">Fixed</span> br tags showing on post title.</li>
+<li><span class="badge badge-danger">Fixed</span> video files are not deleting from the server (FFmpeg)</li>
+<li><span class="badge badge-danger">Fixed</span> promoted pages/posts were not reset after the pro membership is ended.</li>
+<li><span class="badge badge-danger">Fixed</span> 3 nodejs warning messages.</li>
+<li><span class="badge badge-danger">Fixed</span> comment is not working when using the french language.</li>
+<li><span class="badge badge-danger">Fixed</span> the ability to upload multiple images on the product.</li>
+<li><span class="badge badge-danger">Fixed</span> wasabi not working on default east region.</li>
+<li><span class="badge badge-danger">Fixed</span> UTF-8 characters not working on games.</li>
+<li><span class="badge badge-danger">Fixed</span> "Max Upload Size" not updating from admin panel.</li>
+<li><span class="badge badge-danger">Fixed</span> user can upload audio files even if the audio upload is not allowed for the user group.</li>
+<li><span class="badge badge-danger">Fixed</span> weather not showing on the sunshine theme.</li>
+<li><span class="badge badge-danger">Fixed</span> audio recording upload using nodejs from chat and messages page.</li>
+<li><span class="badge badge-danger">Fixed</span> can't post if post approval system enabled from admin panel.</li>
+<li><span class="badge badge-danger">Fixed</span> 50+ design and frontend minor bugs.</li>
+<li><span class="badge badge-danger">Fixed</span> 10+ more minor bugs.</li></ul><hr class="divider">
 							<h3 id="v4-1-1">v4.1.1 <small class="text-muted">08 Jul 2022</small>
   </h3>
   <ul class="changelog"><li><span class="badge badge-success">Added</span> story viewed time.</li>
