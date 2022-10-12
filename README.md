@@ -1,7 +1,7 @@
 ## Wowonder shared by Khanhdz
 
  **1. Installation**
- - Git clone to website path `git clone https://github.com/KhanhDzVcl/Wowonder`
+ - Git clone to website path `git clone https://github.com/Khanhdz29/Wowonder`
  
 **2. Setup**
  - Install *fileinfo* on php
